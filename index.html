@@ -171,6 +171,10 @@ nav{
   padding:12px 16px;
 }
 
+.quickMenu .btn + .btn{
+  margin-top:14px;
+}
+
 /* HERO */
 
 .hero{
@@ -215,6 +219,7 @@ h1 span{
 .buttons{
   display:flex;
   gap:14px;
+  row-gap:18px;
   flex-wrap:wrap;
 }
 
@@ -442,6 +447,17 @@ section{
   margin-bottom:28px;
 }
 
+.downloadActions{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+}
+
+.downloadActions .btn{
+  width:min(100%,320px);
+}
+
 .info{
   padding:10px 15px;
   border-radius:10px;
@@ -589,6 +605,14 @@ footer{
 
   .buttons .btn{
     width:100%;
+  }
+
+  .buttons{
+    row-gap:18px;
+  }
+
+  .quickMenu .btn + .btn{
+    margin-top:16px;
   }
 
   .gameCard{
@@ -843,18 +867,19 @@ footer{
         FreeFire-OB53.apk
     -->
 
-    <a
-      id="downloadButton"
-      class="btn primary"
-      href="https://www.mediafire.com/file/0ka4nk5ecu91q0u/Free+Fire+Proxy+Server.apk/file"
-      
-    >
-      ⬇ Download OB53
-    </a>
+    <div class="downloadActions">
+      <a
+        id="downloadButton"
+        class="btn primary"
+        href="https://www.mediafire.com/file/0ka4nk5ecu91q0u/Free+Fire+Proxy+Server.apk/file"
+      >
+        ⬇ Download OB53
+      </a>
 
-    <a class="btn primary" href="https://www.UnlockFFBeta.com" target="_blank" rel="noopener noreferrer">
-      Activate Proxy
-    </a>
+      <a class="btn primary" href="https://www.UnlockFFBeta.com" target="_blank" rel="noopener noreferrer">
+        Activate Proxy
+      </a>
+    </div>
 
 
     <div class="progressBox" id="progressBox">
