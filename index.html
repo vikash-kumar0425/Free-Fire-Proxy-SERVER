@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Free Fire Proxy Server</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#070b14;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  width:450px;
+  height:450px;
+  left:-180px;
+  top:-180px;
+  background:#ff5a00;
+  filter:blur(160px);
+  opacity:.12;
+  pointer-events:none;
+}
+
+body:after{
+  content:"";
+  position:fixed;
+  width:450px;
+  height:450px;
+  right:-180px;
+  bottom:-180px;
+  background:#0066ff;
+  filter:blur(160px);
+  opacity:.10;
+  pointer-events:none;
+}
+
+/* NAVBAR */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  height:72px;
+  padding:0 7%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(7,11,20,.82);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  font-weight:900;
+}
+
+.logoIcon{
+  width:40px;
+  height:40px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  overflow:hidden;
+  background:#101722;
+  border:2px solid rgba(255,157,0,.7);
+  box-shadow:0 0 25px rgba(255,80,0,.3);
+}
+
+.logoIcon img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.navLinks{
+  display:flex;
+  gap:28px;
+}
+
+.navActions{
+  display:flex;
+  align-items:center;
+  gap:22px;
+}
+
+.navLinks a{
+  color:#9da6b7;
+  text-decoration:none;
+  font-size:14px;
+  transition:.25s;
+}
+
+.navLinks a:hover{
+  color:#fff;
+}
+
+.menuToggle{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-content:center;
+  gap:5px;
+  border:1px solid #273247;
+  border-radius:10px;
+  background:#111827;
+  cursor:pointer;
+}
+
+.menuToggle span{
+  display:block;
+  width:20px;
+  height:2px;
+  border-radius:2px;
+  background:#fff;
+}
+
+.quickMenu{
+  position:absolute;
+  top:64px;
+  right:7%;
+  width:245px;
+  display:none;
+  padding:16px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;
+  background:#0d1421;
+  box-shadow:0 20px 55px rgba(0,0,0,.45);
+}
+
+.quickMenu.open{
+  display:block;
+}
+
+.quickMenuTitle{
+  color:#8993a6;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.quickMenuVersion{
+  display:block;
+  margin-bottom:12px;
+  color:#fff;
+  font-size:18px;
+}
+
+.quickMenu .btn{
+  width:100%;
+  margin-top:8px;
+  padding:12px 16px;
+}
+
+/* HERO */
+
+.hero{
+  min-height:700px;
+  padding:80px 7%;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:60px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:50px;
+  border:1px solid rgba(255,110,30,.25);
+  background:rgba(255,90,0,.07);
+  color:#ffad73;
+  font-size:13px;
+  margin-bottom:22px;
+}
+
+h1{
+  font-size:clamp(48px,7vw,82px);
+  line-height:.95;
+  letter-spacing:-4px;
+  margin-bottom:25px;
+}
+
+h1 span{
+  color:#ff6500;
+}
+
+.heroText{
+  max-width:650px;
+  color:#9ca5b6;
+  font-size:18px;
+  line-height:1.7;
+  margin-bottom:30px;
+}
+
+.buttons{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  padding:15px 25px;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:800;
+  cursor:pointer;
+  border:0;
+  transition:.25s;
+}
+
+.primary{
+  color:white;
+  background:linear-gradient(135deg,#ff4d00,#ff9d00);
+  box-shadow:0 15px 40px rgba(255,80,0,.25);
+}
+
+.primary:hover{
+  transform:translateY(-3px);
+  box-shadow:0 20px 50px rgba(255,80,0,.4);
+}
+
+.secondary{
+  color:#fff;
+  background:#111827;
+  border:1px solid #273247;
+}
+
+.secondary:hover{
+  background:#182236;
+}
+
+/* GAME CARD */
+
+.gameCard{
+  min-height:430px;
+  padding:30px;
+  border-radius:30px;
+  background:
+    linear-gradient(145deg,rgba(255,91,0,.17),rgba(11,17,30,.95)),
+    #0c111c;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 35px 100px rgba(0,0,0,.4);
+  position:relative;
+  overflow:hidden;
+}
+
+.cardTop{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.status{
+  color:#6dff9e;
+  background:rgba(50,255,130,.08);
+  border:1px solid rgba(50,255,130,.16);
+  padding:7px 12px;
+  border-radius:50px;
+  font-size:12px;
+}
+
+.gameLogo{
+  width:95px;
+  height:95px;
+  margin:65px auto 28px;
+  border-radius:25px;
+  overflow:hidden;
+  background:#101722;
+  border:3px solid rgba(255,157,0,.7);
+  box-shadow:0 20px 60px rgba(255,80,0,.3);
+  transform:rotate(-4deg);
+}
+
+.gameLogo img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:rotate(4deg) scale(1.08);
+}
+
+.gameCard h2{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.gameCard p{
+  text-align:center;
+  color:#8993a6;
+  font-size:14px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:25px;
+}
+
+.stat{
+  text-align:center;
+  padding:15px 8px;
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+}
+
+.stat strong{
+  display:block;
+  font-size:16px;
+}
+
+.stat small{
+  color:#788398;
+  font-size:11px;
+}
+
+/* SECTIONS */
+
+section{
+  padding:90px 7%;
+}
+
+.sectionTitle{
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.sectionTitle h2{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.sectionTitle p{
+  color:#858fa2;
+}
+
+/* FEATURES */
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.feature{
+  padding:30px;
+  border-radius:22px;
+  background:#0d1421;
+  border:1px solid rgba(255,255,255,.07);
+  transition:.3s;
+}
+
+.feature:hover{
+  transform:translateY(-7px);
+  border-color:rgba(255,100,0,.3);
+}
+
+.featureIcon{
+  width:52px;
+  height:52px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:rgba(255,90,0,.1);
+  font-size:23px;
+  margin-bottom:20px;
+}
+
+.feature h3{
+  margin-bottom:10px;
+}
+
+.feature p{
+  color:#828da0;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* DOWNLOAD */
+
+.downloadBox{
+  max-width:900px;
+  margin:auto;
+  padding:50px 30px;
+  text-align:center;
+  border-radius:30px;
+  background:linear-gradient(145deg,#121b2b,#0b101a);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 30px 90px rgba(0,0,0,.3);
+}
+
+.version{
+  color:#ff914d;
+  font-weight:800;
+  margin-bottom:12px;
+  font-size:13px;
+}
+
+.downloadBox h2{
+  font-size:40px;
+  margin-bottom:14px;
+}
+
+.downloadBox p{
+  max-width:650px;
+  margin:0 auto 25px;
+  color:#8993a5;
+  line-height:1.7;
+}
+
+.downloadInfo{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:28px;
+}
+
+.info{
+  padding:10px 15px;
+  border-radius:10px;
+  background:#080d16;
+  border:1px solid #202a3b;
+  color:#9ba5b7;
+  font-size:13px;
+}
+
+/* DOWNLOAD PROGRESS */
+
+.progressBox{
+  display:none;
+  max-width:500px;
+  margin:25px auto 0;
+}
+
+.progressText{
+  display:flex;
+  justify-content:space-between;
+  color:#aab3c3;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+.progressBar{
+  height:8px;
+  background:#1a2332;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.progress{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#ff4d00,#ffad00);
+  transition:.2s;
+}
+
+/* FAQ */
+
+.faq{
+  max-width:850px;
+  margin:auto;
+}
+
+details{
+  padding:20px;
+  margin-bottom:12px;
+  border-radius:15px;
+  background:#0d1421;
+  border:1px solid rgba(255,255,255,.07);
+}
+
+summary{
+  cursor:pointer;
+  font-weight:800;
+}
+
+details p{
+  padding-top:15px;
+  color:#8993a5;
+  line-height:1.6;
+  font-size:14px;
+}
+
+/* FOOTER */
+
+footer{
+  padding:40px 7%;
+  text-align:center;
+  color:#697386;
+  font-size:13px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:25px;
+  transform:translate(-50%,130px);
+  padding:14px 20px;
+  border-radius:12px;
+  background:#121b2a;
+  border:1px solid #29364c;
+  color:white;
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
+  transition:.35s;
+  z-index:999;
+}
+
+.toast.show{
+  transform:translate(-50%,0);
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+  nav{
+    padding:0 5%;
+  }
+
+  .navLinks{
+    display:none;
+  }
+
+  .navActions{
+    gap:0;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+    padding:65px 5%;
+  }
+
+  h1{
+    letter-spacing:-2px;
+  }
+
+  section{
+    padding:65px 5%;
+  }
+
+  .features{
+    grid-template-columns:1fr;
+  }
+
+  .downloadBox{
+    padding:35px 20px;
+  }
+
+  .downloadBox h2{
+    font-size:30px;
+  }
+}
+
+@media(max-width:500px){
+
+  .stats{
+    grid-template-columns:1fr;
+  }
+
+  .buttons .btn{
+    width:100%;
+  }
+
+  .gameCard{
+    min-height:390px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+
+  <div class="logo">
+    <div class="logoIcon">
+      <img src="freefire-logo.jfif" alt="Free Fire Logo">
+    </div>
+    FF PROXY SERVER
+  </div>
+
+  <div class="navActions">
+    <div class="navLinks">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <button type="button" class="menuToggle" id="menuToggle" aria-label="Open Free Fire menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div class="quickMenu" id="quickMenu">
+    <div class="quickMenuTitle">FREE FIRE VERSION</div>
+    <strong class="quickMenuVersion">OB53</strong>
+    <a class="btn primary" href="FreeFire-proxy-OB53.apk" download="FreeFire-proxy-OB53.apk">
+      ⬇ Download OB53
+    </a>
+    <a class="btn secondary" href="FreeFire-proxy-Old-Version.apk" download="FreeFire-proxy-Old-Version.apk">
+      Download Old Version
+    </a>
+    <a class="btn primary" href="https://www.UnlockFFBeta.com" target="_blank" rel="noopener noreferrer">
+      Activate Proxy
+    </a>
+  </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<main id="home">
+
+<section class="hero">
+
+  <div>
+
+    <div class="badge">
+      ⚡ Gaming Download Portal
+    </div>
+
+    <h1>
+      Free Fire<br>
+      <span>Proxy Server</span>
+    </h1>
+
+    <p class="heroText">
+      A modern gaming portal for Free Fire version information
+      and authorized downloads. Fast, clean and optimized for
+      mobile users.
+    </p>
+
+    <div class="buttons">
+
+      <a href="#download" class="btn primary">
+        ⬇ Download Now
+      </a>
+
+      <a href="#features" class="btn secondary">
+        Explore Features
+      </a>
+
+      <a
+        href="https://www.UnlockFFBeta.com"
+        class="btn primary"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Activate Proxy
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="gameCard">
+
+    <div class="cardTop">
+
+      <strong>GAME PACKAGE</strong>
+
+      <div class="status">
+        ● Available
+      </div>
+
+    </div>
+
+    <div class="gameLogo">
+      <img src="freefire-logo.jfif" alt="Free Fire Logo">
+    </div>
+
+    <h2>Free Fire Proxy</h2>
+
+    <p>
+      Authorized Download Portal
+    </p>
+
+    <div class="stats">
+
+      <div class="stat">
+        <strong>OB53</strong>
+        <small>Version</small>
+      </div>
+
+      <div class="stat">
+        <strong>Android</strong>
+        <small>Platform</small>
+      </div>
+
+      <div class="stat">
+        <strong>Secure</strong>
+        <small>Source</small>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section id="features">
+
+  <div class="sectionTitle">
+
+    <h2>Why Use Our Portal?</h2>
+
+    <p>
+      Simple, fast and mobile-friendly experience.
+    </p>
+
+  </div>
+
+
+  <div class="features">
+
+    <div class="feature">
+
+      <div class="featureIcon">⚡</div>
+
+      <h3>Fast Access</h3>
+
+      <p>
+        Quickly reach your authorized download source
+        without unnecessary steps.
+      </p>
+
+    </div>
+
+
+    <div class="feature">
+
+      <div class="featureIcon">📱</div>
+
+      <h3>Mobile Friendly</h3>
+
+      <p>
+        Responsive interface designed for Android phones,
+        tablets and desktop browsers.
+      </p>
+
+    </div>
+
+
+    <div class="feature">
+
+      <div class="featureIcon">🔒</div>
+
+      <h3>Trusted Source</h3>
+
+      <p>
+        Always use official or authorized sources when
+        downloading game files.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DOWNLOAD -->
+
+<section id="download">
+
+  <div class="downloadBox">
+
+    <div class="version">
+      LATEST LISTED VERSION • OB53
+    </div>
+
+    <h2>
+      Download Free Fire Proxy
+    </h2>
+
+    <p>
+      Click the button below to download your authorized
+      game package.
+    </p>
+
+
+    <div class="downloadInfo">
+
+      <div class="info">📱 Android</div>
+      <div class="info">🎮 Free Fire</div>
+      <div class="info">📦 OB53</div>
+      <div class="info">⚡ Fast Download</div>
+
+    </div>
+
+
+    <!--
+      IMPORTANT:
+
+      Put your authorized APK here:
+
+      files/FreeFire-OB53.apk
+
+      Folder structure:
+
+      index.html
+      files/
+        FreeFire-OB53.apk
+    -->
+
+    <a
+      id="downloadButton"
+      class="btn primary"
+      href="https://www.mediafire.com/file/0ka4nk5ecu91q0u/Free+Fire+Proxy+Server.apk/file"
+      
+    >
+      ⬇ Download OB53
+    </a>
+
+    <a class="btn primary" href="https://www.UnlockFFBeta.com" target="_blank" rel="noopener noreferrer">
+      Activate Proxy
+    </a>
+
+
+    <div class="progressBox" id="progressBox">
+
+      <div class="progressText">
+        <span>Preparing download...</span>
+        <span id="progressPercent">0%</span>
+      </div>
+
+      <div class="progressBar">
+        <div class="progress" id="progress"></div>
+      </div>
+
+    </div>
+
+
+    <p style="font-size:12px;margin-top:18px;">
+      Download speed depends on your hosting server and internet connection.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section id="faq">
+
+  <div class="sectionTitle">
+
+    <h2>Frequently Asked Questions</h2>
+
+    <p>
+      Everything you need to know.
+    </p>
+
+  </div>
+
+
+  <div class="faq">
+
+    <details>
+
+      <summary>
+        What is this website?
+      </summary>
+
+      <p>
+        This is a modern gaming download portal interface
+        for displaying version information and providing
+        access to an authorized download source.
+      </p>
+
+    </details>
+
+
+    <details>
+
+      <summary>
+        Which version is listed?
+      </summary>
+
+      <p>
+        This template currently displays OB53.
+        Update the version information whenever your
+        authorized source changes.
+      </p>
+
+    </details>
+
+
+    <details>
+
+      <summary>
+        How does the Download button work?
+      </summary>
+
+      <p>
+        The button points directly to the APK file located
+        inside the files folder. Your hosting server must
+        contain the authorized file at that exact path.
+      </p>
+
+    </details>
+
+
+    <details>
+
+      <summary>
+        Does it work on Android?
+      </summary>
+
+      <p>
+        Yes. The website is responsive and optimized
+        for Android, tablet and desktop browsers.
+      </p>
+
+    </details>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  © 2026 FF Proxy Server
+  <br><br>
+  Gaming Download Portal
+
+</footer>
+
+
+<!-- TOAST -->
+
+<div class="toast" id="toast">
+  Download starting...
+</div>
+
+
+<script>
+
+const downloadButton =
+  document.getElementById("downloadButton");
+
+const menuToggle =
+  document.getElementById("menuToggle");
+
+const quickMenu =
+  document.getElementById("quickMenu");
+
+const toast =
+  document.getElementById("toast");
+
+const progressBox =
+  document.getElementById("progressBox");
+
+const progress =
+  document.getElementById("progress");
+
+const progressPercent =
+  document.getElementById("progressPercent");
+
+
+downloadButton.addEventListener("click", function(){
+
+  toast.classList.add("show");
+
+  progressBox.style.display = "block";
+
+  let value = 0;
+
+  const timer = setInterval(function(){
+
+    value += Math.floor(Math.random() * 12) + 5;
+
+    if(value >= 100){
+
+      value = 100;
+
+      clearInterval(timer);
+
+      setTimeout(function(){
+        progressBox.style.display = "none";
+      },800);
+    }
+
+    progress.style.width = value + "%";
+
+    progressPercent.textContent =
+      value + "%";
+
+  },120);
+
+  setTimeout(function(){
+
+    toast.classList.remove("show");
+
+  },2500);
+
+});
+
+menuToggle.addEventListener("click", function(){
+  const isOpen = quickMenu.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", isOpen);
+});
+
+document.addEventListener("click", function(event){
+  if(!quickMenu.contains(event.target) && !menuToggle.contains(event.target)){
+    quickMenu.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }
+});
+
+</script>
+
+</body>
+</html>
