@@ -56,11 +56,13 @@ nav{
   position:sticky;
   top:0;
   z-index:100;
-  height:72px;
+  min-height:72px;
   padding:0 7%;
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
   background:rgba(7,11,20,.82);
   backdrop-filter:blur(18px);
   border-bottom:1px solid rgba(255,255,255,.07);
@@ -102,6 +104,33 @@ nav{
   display:flex;
   align-items:center;
   gap:22px;
+}
+
+.categoryLinks{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  padding:0 0 12px;
+  order:3;
+}
+
+.categoryLink{
+  padding:8px 14px;
+  border:1px solid #273247;
+  border-radius:9px;
+  color:#c7cfdd;
+  background:#111827;
+  font-size:12px;
+  font-weight:800;
+  text-decoration:none;
+  transition:.25s;
+}
+
+.categoryLink:hover{
+  color:#fff;
+  border-color:#ff6500;
+  background:rgba(255,90,0,.12);
 }
 
 .navLinks a{
@@ -583,6 +612,16 @@ footer{
     padding:0 5%;
   }
 
+  .categoryLinks{
+    gap:6px;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+  }
+
+  .categoryLink{
+    flex:0 0 auto;
+  }
+
   .navLinks{
     display:none;
   }
@@ -650,9 +689,9 @@ footer{
 
   <div class="logo">
     <div class="logoIcon">
-      <img src="freefire-logo.jfif" alt="Free Fire Logo">
+      <img src="alprologo.jpeg" alt="Free Fire Logo">
     </div>
-    FF PROXY SERVER
+      Alternative Pro
   </div>
 
   <div class="navActions">
@@ -668,6 +707,18 @@ footer{
       <span></span>
       <span></span>
     </button>
+  </div>
+
+  <div class="categoryLinks" aria-label="Content categories">
+    <a class="categoryLink" href="#home" data-category="Anime">Anime</a>
+    <a class="categoryLink" href="#home" data-category="Software">Software</a>
+    <a class="categoryLink" href="#home" data-category="Apps">Apps</a>
+    <a class="categoryLink" href="#home" data-category="Movie">Movie</a>
+    <a class="categoryLink" href="#home" data-category="Games">Games</a>
+    <a class="categoryLink" href="#home" data-category="All VPN">All VPN</a>
+    <a class="categoryLink" href="#home" data-category="All AI">All AI</a>
+    <a class="categoryLink" href="#home" data-category="Hacking">Hacking</a>
+    <a class="categoryLink" href="#home" data-category="News">News</a>
   </div>
 
   <div class="quickMenu" id="quickMenu">
@@ -829,7 +880,7 @@ footer{
     <div class="downloadActions">
       <a
         class="btn primary"
-        href="https://www.mediafire.com/file/yxryi38czxvhvlp/Urban+Vpn+pc.zip/file"
+        href="https://urban-vpn.com/download/"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -962,7 +1013,7 @@ footer{
         Activate Proxy
       </a>
 
-      <a class="btn primary" href="https://www.mediafire.com/file/yxryi38czxvhvlp/Urban+Vpn+pc.zip/file" target="_blank" rel="noopener noreferrer">
+      <a class="btn primary" href="https://urban-vpn.com/download/" target="_blank" rel="noopener noreferrer">
         Download Urban VPN
       </a>
     </div>
@@ -1163,6 +1214,17 @@ document.addEventListener("click", function(event){
     quickMenu.classList.remove("open");
     menuToggle.setAttribute("aria-expanded", "false");
   }
+});
+
+document.querySelectorAll(".categoryLink").forEach(function(categoryLink){
+  categoryLink.addEventListener("click", function(){
+    toast.textContent = categoryLink.dataset.category + " category selected.";
+    toast.classList.add("show");
+
+    setTimeout(function(){
+      toast.classList.remove("show");
+    },1800);
+  });
 });
 
 </script>
